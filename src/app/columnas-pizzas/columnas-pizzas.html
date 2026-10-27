@@ -1,0 +1,17 @@
+<div class="container">
+    <h2 class="h2 text-center">Catalogo Pizzas</h2>
+    <div class="row">
+        @for (pizza of pizzas; track pizza.nombre) {
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card mb-4">
+                <img [src]="pizza.imagen" class="card-img-top" [alt]="pizza.nombre">
+                <div class="card-body">
+                    <h5 class="card-title">{{ pizza.nombre }} {{ pizza.precio}}€ </h5>
+                    <p class="card-text">{{ pizza.ingredientes }}</p>
+                    <a href="#" class="btn btn-primary">Pedir ahora</a>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

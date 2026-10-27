@@ -1,0 +1,72 @@
+import { Component, output } from '@angular/core';
+
+
+export class Pizza {
+  nombre: string;
+  ingredientes: string;
+  imagen: string;
+  precio: number;
+
+  constructor(nombre: string, ingredientes: string, imagen: string, precio: number) {
+    this.nombre = nombre;
+    this.ingredientes = ingredientes;
+    this.imagen = imagen;
+    this.precio = precio;
+  }
+}
+
+@Component({
+  imports: [],
+  selector: 'app-columnas-pizzas',
+  styleUrl: './columnas-pizzas.scss',
+  templateUrl: './columnas-pizzas.html',
+})
+
+export class ColumnasPizzas {
+  pizzas: Pizza[] = [
+    new Pizza("Pizza Margarita", "Tomate, mozzarella fresca, albahaca y un toque de aceite de oliva virgen extra.", "/margarita.jpg", 11.6),
+    new Pizza("Pizza Barbacoa", "Salsa barbacoa, mozzarella, carne picada, pollo, bacon crujiente y un toque de cebolla morada.", "/barbacoa.jpg", 15.5),
+    new Pizza(
+      'Pizza 4 Quesos',
+      'Crema de queso, mozzarella, gorgonzola, parmesano y un toque de provolone.',
+      '/4quesos.jpg', 15.3
+    ),
+    new Pizza(
+      'Pizza Pollo',
+      'Salsa de tomate, mozzarella, tiras de pollo asado, champiñones y un toque de orégano.',
+      '/pollo.jpg',
+      12.6
+    ),
+    new Pizza(
+      'Pizza Burrito',
+      'Tortilla de trigo rellena de carne, tomate y alubias, acompañada de verduras frescas.',
+      '/burrito.jpg',
+      5.3
+    ),
+    new Pizza(
+      'Pizza Hawaiana',
+      'Salsa de tomate, mozzarella, jamón cocido y piña.',
+      '/hawaiana.jpg',
+      2.33
+    ),
+    new Pizza(
+      'Pizza Napolitana',
+      'Tomate, mozzarella fresca, albahaca y aceite de oliva virgen extra.',
+      '/napolitana.jpg',
+      11.5
+    ),
+    new Pizza(
+      'Pizza de Chocolate',
+      'Crema de chocolate, fresas y plátano.',
+      '/choculate.jpg',
+      10.3
+    ),
+  ];
+
+  enviarLista = output<Pizza[]>();
+
+  mandarDatos() {
+    this.enviarLista.emit(this.pizzas);
+  }
+}
+
