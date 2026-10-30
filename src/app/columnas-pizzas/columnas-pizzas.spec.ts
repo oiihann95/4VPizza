@@ -30,4 +30,18 @@ describe('ColumnasPizzas', () => {
       ]),
     );
   });
+
+  it('should recalculate the filtered pizzas when the input signal changes', () => {
+    fixture.componentRef.setInput('textoRecibido', 'mozzarella');
+    fixture.detectChanges();
+
+    expect(component.pizzasFiltrada).toHaveLength(6);
+
+    fixture.componentRef.setInput('textoRecibido', 'piña');
+    fixture.detectChanges();
+
+    expect(component.pizzasFiltrada.map((pizza) => pizza.nombre)).toEqual([
+      'Pizza Hawaiana',
+    ]);
+  });
 });

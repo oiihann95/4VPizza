@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
-import { Buscador } from '../buscador/buscador';
+import { Component, output } from '@angular/core';
+
 
 @Component({
-  imports: [Buscador],
   selector: 'app-navbar-pizza',
   styleUrl: './navbar-pizza.scss',
   templateUrl: './navbar-pizza.html',
 })
-export class NavbarPizza {}
+export class NavbarPizza {
+  readonly buscar = output<string>();
+
+  enviarTexto(texto: string) {
+    this.buscar.emit(texto);
+  }
+}

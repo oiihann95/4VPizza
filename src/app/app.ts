@@ -1,16 +1,20 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Buscador } from "./buscador/buscador";
+
 import { ColumnasPizzas } from './columnas-pizzas/columnas-pizzas';
 import { FomularioPedido } from './fomulario-pedido/fomulario-pedido';
 import { NavbarPizza } from './navbar-pizza/navbar-pizza';
 
 @Component({
-  imports: [RouterOutlet, ColumnasPizzas, NavbarPizza, FomularioPedido, Buscador],
+  imports: [RouterOutlet, ColumnasPizzas, NavbarPizza, FomularioPedido],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('4VPizza');
+  textoBusqueda: string = '';
+
+  recibirTexto(texto: string) {
+    this.textoBusqueda = texto;
+  }
 }

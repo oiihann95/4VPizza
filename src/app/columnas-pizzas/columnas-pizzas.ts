@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, input, OnChanges } from '@angular/core';
 
 
 export class Pizza {
@@ -22,7 +22,9 @@ export class Pizza {
   templateUrl: './columnas-pizzas.html',
 })
 
-export class ColumnasPizzas {
+export class ColumnasPizzas implements OnChanges {
+
+
   pizzas: Pizza[] = [
     new Pizza("Pizza Margarita", "Tomate, mozzarella fresca, albahaca y un toque de aceite de oliva virgen extra.", "/margarita.jpg", 11.6),
     new Pizza("Pizza Barbacoa", "Salsa barbacoa, mozzarella, carne picada, pollo, bacon crujiente y un toque de cebolla morada.", "/barbacoa.jpg", 15.5),
@@ -63,10 +65,26 @@ export class ColumnasPizzas {
     ),
   ];
 
-  enviarLista = output<Pizza[]>();
+  readonly textoRecibido = input('');
+  pizzasFiltrada: Pizza[] = this.pizzas;
 
-  mandarDatos() {
-    this.enviarLista.emit(this.pizzas);
+  ngOnChanges() {
+    this.filtrarPizzas();
+  }
+
+  filtrarPizzas() {
+    this.pizzasFiltrada = [];
+    const texto = this.textoRecibido().trim().toLowerCase();
+
+    if (texto === '') {
+      this.pizzasFiltrada = this.pizzas;
+    } else {
+      for (let i = 0; i < this.pizzas.length; i++) {
+        const pizzaIngrediente = this.pizzas[i].ingredientes.toLowerCase();
+        if (pizzaIngrediente.includes(texto)) {
+          this.pizzasFiltrada.push(this.pizzas[i]);
+        }
+      }
+    }
   }
 }
-

@@ -18,4 +18,13 @@ describe('NavbarPizza', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit the search text through its output', () => {
+    const textosEmitidos: string[] = [];
+    component.buscar.subscribe((texto) => textosEmitidos.push(texto));
+
+    component.enviarTexto('mozzarella');
+
+    expect(textosEmitidos).toEqual(['mozzarella']);
+  });
 });

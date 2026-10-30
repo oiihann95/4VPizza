@@ -1,4 +1,3 @@
-
-<app-navbar-pizza></app-navbar-pizza>
-<app-columnas-pizzas></app-columnas-pizzas>
+<app-navbar-pizza (buscar)="recibirTexto($event)"></app-navbar-pizza>
+<app-columnas-pizzas [textoRecibido]="textoBusqueda"></app-columnas-pizzas>
 <app-formulario-pedido></app-formulario-pedido>
