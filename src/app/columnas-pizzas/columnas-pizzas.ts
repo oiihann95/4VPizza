@@ -13,6 +13,8 @@ export class Pizza {
     this.imagen = imagen;
     this.precio = precio;
   }
+
+
 }
 
 @Component({
@@ -65,8 +67,10 @@ export class ColumnasPizzas implements OnChanges {
     ),
   ];
 
-  readonly textoRecibido = input('');
+  textoRecibido = input('');
   pizzasFiltrada: Pizza[] = this.pizzas;
+
+
 
   ngOnChanges() {
     this.filtrarPizzas();
@@ -85,6 +89,62 @@ export class ColumnasPizzas implements OnChanges {
           this.pizzasFiltrada.push(this.pizzas[i]);
         }
       }
+    }
+
+
+  }
+
+
+  pedido: { pizza: Pizza, cantidad: number }[] = [];
+  mostrar = true;
+  clasePizza: string = "col-12 col-md-6 col-lg-3";
+
+  mostrarCarrito() {
+    this.mostrar = false;
+  }
+
+  totalPedido: number = 0;
+
+
+  clickCart(pizza: Pizza, cantidad: string) {
+
+    let encontrada = false;
+
+    for (let i = 0; i < this.pedido.length; i++) {
+
+      if (this.pedido[i].pizza.nombre == pizza.nombre) {
+        this.pedido[i].cantidad += Number(cantidad);
+        encontrada = true;
+      }
+    }
+
+    if (encontrada == false) {
+      this.pedido.push({ pizza, cantidad: Number(cantidad) });
+    }
+
+    this.mostrarCarrito();
+    this.calcularTotal();
+    this.clasePizza = "col-12 col-md-6 col-lg-4";
+  }
+  EliminarPizza(pizza: Pizza) {
+
+    for (let i = 0; i < this.pedido.length; i++) {
+
+      if (this.pedido[i].pizza.nombre == pizza.nombre) {
+
+        this.pedido.splice(i, 1);
+
+      }
+
+    }
+    this.calcularTotal()
+
+  }
+  calcularTotal() {
+    this.totalPedido = 0;
+
+    for (let i = 0; i < this.pedido.length; i++) {
+      this.totalPedido += this.pedido[i].pizza.precio * this.pedido[i].cantidad;
     }
   }
 }

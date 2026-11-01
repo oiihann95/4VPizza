@@ -1,29 +1,94 @@
 <div class="container">
     <h2 class="h2 text-center">Catalogo Pizzas</h2>
     <div class="row">
-        @for (pizza of pizzasFiltrada; track pizza.nombre) {
-        <div class="col-12 col-md-6 col-lg-3">
-            <div class="card mb-4">
-                <img [src]="pizza.imagen" class="card-img-top" [alt]="pizza.nombre">
 
-                <div class="card-body">
-                    <h5 class="card-title">{{ pizza.nombre }} {{ pizza.precio }}€</h5>
-                    <p class="card-text">{{ pizza.ingredientes }}</p>
+        <!-- Catálogo de pizzas -->
+        <div [class]="mostrar ? 'col-12' : 'col-12 col-lg-9'">
+            <div class="row">
+                @for (pizza of pizzasFiltrada; track pizza.nombre) {
+                <div [class]="clasePizza">
+                    <div class="card mb-4">
+                        <img [src]="pizza.imagen" class="card-img-top" [alt]="pizza.nombre">
 
-                    <div class="d-flex align-items-end gap-4">
-                        <div>
-                            <label for="cantidad" class="form-label">Cantidad :</label>
-                            <input type="number" class="form-control" id="cantidad" min="0" max="10" step="1"
-                                style="width: 80px;" value="1">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ pizza.nombre }} {{ pizza.precio }}€</h5>
+                            <p class="card-text">{{ pizza.ingredientes }}</p>
+
+                            <div class="d-flex align-items-end gap-4">
+                                <div>
+                                    <label class="form-label">Cantidad :</label>
+                                    <input #cantidad type="number" class="form-control" min="0" max="10" step="1"
+                                        style="width: 80px;" value="1">
+                                </div>
+
+                                <button class="btn btn-primary text-nowrap flex-grow-1"
+                                    (click)="clickCart(pizza, cantidad.value)">
+                                    Pedir ahora <i class="bi bi-cart3"></i>
+                                </button>
+                            </div>
                         </div>
-                        <button class="btn btn-primary text-nowrap">
-                            Pedir ahora
-                        </button>
-
                     </div>
                 </div>
+                }
             </div>
         </div>
-        }
+
+        <div class="col-12 col-lg-3" [hidden]="mostrar">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="bi bi-cart3"></i> Mi pedido
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    @for (item of pedido; track item.pizza.nombre) {
+                    <div class="card mb-2 border-0 bg-light">
+                        <div class="card-body py-2 px-3">
+                            <div class="d-flex align-items-center justify-content-between">
+
+                                <div>
+                                    <h6 class="mb-1">{{ item.pizza.nombre }}</h6>
+                                    <small class="text-muted">
+                                        {{ item.cantidad }} x {{ item.pizza.precio }}€
+                                    </small>
+                                </div>
+
+                                <div class="d-flex align-items-center gap-3">
+                                    <p>
+                                        {{ item.pizza.precio * item.cantidad }}€
+                                    </p>
+
+                                    <button class="btn btn-outline-danger btn-sm" (click)="EliminarPizza(item.pizza)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    <div class="card mb-2 border-0 bg-light">
+                        <div class="card-body py-2 px-3">
+                            <div class="d-flex align-items-center gap-3 w-100">
+
+                                <p class="mb-0 flex-grow-1">
+                                    Total: {{totalPedido}}€
+                                </p>
+
+                                <button class="btn btn-success btn-sm text-nowrap flex-grow-1">
+                                    Pedir ahora <i class="bi bi-cart-check"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
+
 </div>
