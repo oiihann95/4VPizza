@@ -1,4 +1,4 @@
-import { Component, input, OnChanges } from '@angular/core';
+import { Component } from '@angular/core';
 
 
 export class Pizza {
@@ -24,7 +24,7 @@ export class Pizza {
   templateUrl: './columnas-pizzas.html',
 })
 
-export class ColumnasPizzas implements OnChanges {
+export class ColumnasPizzas {
 
 
   pizzas: Pizza[] = [
@@ -67,18 +67,17 @@ export class ColumnasPizzas implements OnChanges {
     ),
   ];
 
-  textoRecibido = input('');
+  textoBusqueda: string = "";
   pizzasFiltrada: Pizza[] = this.pizzas;
 
-
-
-  ngOnChanges() {
+  textoRecibido(texto: string) {
+    this.textoBusqueda = texto;
     this.filtrarPizzas();
   }
 
   filtrarPizzas() {
     this.pizzasFiltrada = [];
-    const texto = this.textoRecibido().trim().toLowerCase();
+    const texto = this.textoBusqueda.toLowerCase();
 
     if (texto === '') {
       this.pizzasFiltrada = this.pizzas;
