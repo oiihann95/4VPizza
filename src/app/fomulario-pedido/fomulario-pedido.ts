@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { PedidoService } from '../servicios/pedido';
 
 @Component({
   imports: [],
@@ -7,6 +8,9 @@ import { Component, signal } from '@angular/core';
   templateUrl: './fomulario-pedido.html',
 })
 export class FomularioPedido {
+  readonly pedidoService = inject(PedidoService);
+
+  
   esOcultoTel = signal(true);
   esOcultoTar = signal(true);
   onClickBizum() {

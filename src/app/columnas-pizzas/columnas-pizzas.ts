@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { PedidoService } from '../servicios/pedido';
+
+
 
 
 export class Pizza {
@@ -16,7 +19,15 @@ export class Pizza {
 
 
 }
+export class ItemPedido {
+  pizza: Pizza;
+  cantidad: number;
 
+  constructor(pizza: Pizza, cantidad: number) {
+    this.pizza = pizza;
+    this.cantidad = cantidad;
+  }
+}
 @Component({
   imports: [],
   selector: 'app-columnas-pizzas',
@@ -26,6 +37,7 @@ export class Pizza {
 
 export class ColumnasPizzas {
 
+  private readonly pedidoService = inject(PedidoService);
 
   pizzas: Pizza[] = [
     new Pizza("Pizza Margarita", "Tomate, mozzarella fresca, albahaca y un toque de aceite de oliva virgen extra.", "/margarita.jpg", 11.6),
@@ -94,7 +106,7 @@ export class ColumnasPizzas {
   }
 
 
-  pedido: { pizza: Pizza, cantidad: number }[] = [];
+  pedido: ItemPedido[] = [];
   mostrar = true;
   clasePizza: string = "col-12 col-md-6 col-lg-3";
 
@@ -118,11 +130,13 @@ export class ColumnasPizzas {
     }
 
     if (encontrada == false) {
-      this.pedido.push({ pizza, cantidad: Number(cantidad) });
+      this.pedido.push(new ItemPedido(pizza, Number(cantidad)));
+
     }
 
     this.mostrarCarrito();
     this.calcularTotal();
+    this.pedidoService.pedido = this.pedido;
     this.clasePizza = "col-12 col-md-6 col-lg-4";
   }
   EliminarPizza(pizza: Pizza) {
@@ -137,7 +151,7 @@ export class ColumnasPizzas {
 
     }
     this.calcularTotal()
-
+    this.pedidoService.pedido = this.pedido;
   }
   calcularTotal() {
     this.totalPedido = 0;
@@ -146,4 +160,6 @@ export class ColumnasPizzas {
       this.totalPedido += this.pedido[i].pizza.precio * this.pedido[i].cantidad;
     }
   }
+
+
 }
