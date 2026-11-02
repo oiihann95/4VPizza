@@ -1,99 +1,99 @@
 <div class="container py-4">
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
-        <h2 class="mb-4">Realizar pedido</h2>
+      <h2 class="mb-4">Realizar pedido</h2>
 
-        <section class="mb-4" aria-label="Resumen del pedido">
-          <h3 class="fs-6">Tu pedido</h3>
-          @if (pedidoService.pedido.length === 0) {
-          <p class="text-muted">Todavía no has añadido pizzas.</p>
-          } @else {
-          <ul class="list-group">
-            @for (item of pedidoService.pedido; track item.pizza.nombre) {
-            <li class="list-group-item d-flex justify-content-between">
-              <span>{{ item.pizza.nombre }} × {{ item.cantidad }}</span>
-              <span>{{ item.pizza.precio * item.cantidad }}€</span>
-            </li>
-            }
-          </ul>
+      <section class="mb-4" aria-label="Resumen del pedido">
+        <h3 class="fs-6">Tu pedido</h3>
+        @if (pedidoService.pedido.length === 0) {
+        <p class="text-muted">Todavía no has añadido pizzas.</p>
+        } @else {
+        <ul class="list-group">
+          @for (item of pedidoService.pedido; track item.pizza.nombre) {
+          <li class="list-group-item d-flex justify-content-between">
+            <span>{{ item.pizza.nombre }} × {{ item.cantidad }}</span>
+            <span>{{ item.pizza.precio * item.cantidad }}€</span>
+          </li>
           }
-        </section>
+        </ul>
+        }
+        <h3 class="fs-6">Total: {{calcularTotal()}} € </h3>
+      </section>
 
-        <div class="container mt-4">
+      <div class="container mt-4">
 
-          <div class="card shadow-sm">
-            <div class="card-header">
-              <h4 class="mb-0">Datos del pedido</h4>
-            </div>
-
-            <div class="card-body">
-
-              <form novalidate (ngSubmit)="validarFormulario()">
-                <div class="mb-3">
-                  <label for="hora" class="form-label">Hora de entrega</label>
-                  <input type="time" id="hora" name="horaEntrega" class="form-control" [(ngModel)]="horaEntrega">
-                </div>
-
-
-                <div class="mb-3">
-                  <label for="direccion" class="form-label">Dirección completa</label>
-                  <input type="text" id="direccion" name="direccion" class="form-control"
-                    [(ngModel)]="direccion"
-                    placeholder="Calle, número, piso, localidad...">
-                </div>
-
-
-                <div class="mb-3">
-                  <label class="form-label">Método de pago</label>
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="metodoPago" id="tarjeta" value="tarjeta"
-                      (change)="onClickTar()">
-                    <label class="form-check-label" for="tarjeta">
-                      Tarjeta
-                    </label>
-                  </div>
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="metodoPago" id="bizum" value="bizum"
-                      (change)="onClickBizum()">
-                    <label class="form-check-label" for="bizum">
-                      Bizum
-                    </label>
-                  </div>
-                </div>
-
-                <div class="mb-3" [hidden]="esOcultoTar()">
-                  <label for="numeroTarjeta" class="form-label">
-                    Número de tarjeta
-                  </label>
-                  <input type="text" id="numeroTarjeta" name="numeroTarjeta" class="form-control"
-                    [(ngModel)]="numeroTarjeta" placeholder="16 dígitos">
-                </div>
-
-                <div class="mb-3" [hidden]="esOcultoTel()">
-                  <label for="movil" class="form-label">
-                    Número de móvil
-                  </label>
-                  <input type="text" id="movil" name="movil" class="form-control" [(ngModel)]="movil"
-                    placeholder="9 dígitos">
-                </div>
-
-                @if (mensajeValidacion) {
-                <p class="mb-3" role="status">{{ mensajeValidacion }}</p>
-                }
-
-                <button type="submit" class="btn btn-success w-100">
-                  Confirmar pedido
-                  <i class="bi bi-cart-check"></i>
-                </button>
-
-              </form>
-
-            </div>
+        <div class="card shadow-sm">
+          <div class="card-header">
+            <h4 class="mb-0">Datos del pedido</h4>
           </div>
 
+          <div class="card-body">
+
+            <form novalidate (ngSubmit)="validarFormulario()">
+              <div class="mb-3">
+                <label for="hora" class="form-label">Hora de entrega</label>
+                <input type="time" id="hora" name="horaEntrega" class="form-control" [(ngModel)]="horaEntrega">
+              </div>
+
+
+              <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección completa</label>
+                <input type="text" id="direccion" name="direccion" class="form-control" [(ngModel)]="direccion"
+                  placeholder="Calle, número, piso, localidad...">
+              </div>
+
+
+              <div class="mb-3">
+                <label class="form-label">Método de pago</label>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="metodoPago" id="tarjeta" value="tarjeta"
+                    (change)="onClickTar()">
+                  <label class="form-check-label" for="tarjeta">
+                    Tarjeta
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="metodoPago" id="bizum" value="bizum"
+                    (change)="onClickBizum()">
+                  <label class="form-check-label" for="bizum">
+                    Bizum
+                  </label>
+                </div>
+              </div>
+
+              <div class="mb-3" [hidden]="esOcultoTar()">
+                <label for="numeroTarjeta" class="form-label">
+                  Número de tarjeta
+                </label>
+                <input type="text" id="numeroTarjeta" name="numeroTarjeta" class="form-control"
+                  [(ngModel)]="numeroTarjeta" placeholder="16 dígitos">
+              </div>
+
+              <div class="mb-3" [hidden]="esOcultoTel()">
+                <label for="movil" class="form-label">
+                  Número de móvil
+                </label>
+                <input type="text" id="movil" name="movil" class="form-control" [(ngModel)]="movil"
+                  placeholder="9 dígitos">
+              </div>
+
+              @if (mensajeValidacion) {
+              <p class="mb-3" role="status">{{ mensajeValidacion }}</p>
+              }
+
+              <button type="submit" class="btn btn-success w-100">
+                Confirmar pedido
+                <i class="bi bi-cart-check"></i>
+              </button>
+
+            </form>
+
+          </div>
         </div>
+
+      </div>
     </div>
   </div>
 </div>

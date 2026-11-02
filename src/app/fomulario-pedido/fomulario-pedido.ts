@@ -74,4 +74,14 @@ export class FomularioPedido {
     this.numeroTarjeta = "";
     this.movil = "";
   }
+  totalPedido: number = 0;
+  calcularTotal() {
+    this.totalPedido = 0;
+
+    for (let i = 0; i < this.pedidoService.pedido.length; i++) {
+      this.totalPedido += this.pedidoService.pedido[i].pizza.precio * this.pedidoService.pedido[i].cantidad;
+    }
+
+    return this.totalPedido;
+  }
 }
