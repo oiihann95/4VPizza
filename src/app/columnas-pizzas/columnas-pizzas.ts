@@ -1,33 +1,12 @@
 import { Component, inject } from '@angular/core';
+import { ItemPedido } from '../models/ItemPedido';
+import { Pizza } from '../models/Pizzas';
 import { PedidoService } from '../servicios/pedido';
 
 
 
 
-export class Pizza {
-  nombre: string;
-  ingredientes: string;
-  imagen: string;
-  precio: number;
 
-  constructor(nombre: string, ingredientes: string, imagen: string, precio: number) {
-    this.nombre = nombre;
-    this.ingredientes = ingredientes;
-    this.imagen = imagen;
-    this.precio = precio;
-  }
-
-
-}
-export class ItemPedido {
-  pizza: Pizza;
-  cantidad: number;
-
-  constructor(pizza: Pizza, cantidad: number) {
-    this.pizza = pizza;
-    this.cantidad = cantidad;
-  }
-}
 @Component({
   imports: [],
   selector: 'app-columnas-pizzas',
